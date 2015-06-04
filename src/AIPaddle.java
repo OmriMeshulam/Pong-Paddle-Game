@@ -6,7 +6,7 @@ public class AIPaddle {
 	int x;
 	int y;
 	int width = 15;
-	int height = 40;
+	int height = 60;
 	int speed = 1;
 
 	Rectangle boundingBox;
@@ -23,12 +23,15 @@ public class AIPaddle {
 	}
 
 	public void tick(Game game) {
-		if (game.player.y < y) {
-			y--;
+		
+		boundingBox.setBounds(x, y, width, height);
+
+		if (game.ball.y - height/2 < y && y >= 0) {
+			y-= speed;
 		}
 		
-		if (game.player.y > y) {
-			y++;
+		if (game.ball.y > y + height/2 && y + height <= game.getHeight()) {
+			y+= speed;
 		}
 	}
 

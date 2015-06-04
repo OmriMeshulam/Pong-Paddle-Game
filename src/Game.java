@@ -14,11 +14,12 @@ public class Game extends Canvas implements Runnable {
 
 	public static PlayerPaddle player;
 	public static AIPaddle ai;
+	public static Ball ball;
 
 	InputHandler IH;
 
 	JFrame frame; // Window of the game
-	public final int WIDTH = 400;
+	public final int WIDTH = 800;
 	public final int HEIGHT = WIDTH / 16 * 9;
 	public final Dimension gameSize = new Dimension(WIDTH, HEIGHT);
 	public final String TITLE = "Pong!";
@@ -27,7 +28,9 @@ public class Game extends Canvas implements Runnable {
 			BufferedImage.TYPE_INT_RGB);
 
 	static boolean gameRunning = false;
-		
+	
+	int p1Score, p2Score;
+
 	@Override
 	public void run() {
 
@@ -48,7 +51,7 @@ public class Game extends Canvas implements Runnable {
 	public synchronized void start() {
 		gameRunning = true;
 		new Thread(this).start();
-	
+
 	}
 
 	public static synchronized void stop() {
@@ -77,6 +80,7 @@ public class Game extends Canvas implements Runnable {
 
 		player = new PlayerPaddle(10, 60);
 		ai = new AIPaddle(getWidth() - 25, 60);
+		ball = new Ball(getWidth() / 2, getHeight() / 2);
 
 	}
 
@@ -84,6 +88,7 @@ public class Game extends Canvas implements Runnable {
 
 		player.tick(this);
 		ai.tick(this);
+		ball.tick(this);
 	}
 
 	public void render() {
@@ -100,10 +105,20 @@ public class Game extends Canvas implements Runnable {
 																	// background
 
 		/*
-		 * g.setColor(Color.RED); g.fillRect(0, 0, getWidth(), getHeight());
+		 * g.setColor(Color.RED); 
+		 * g.fillRect(0, 0, getWidth(), getHeight());
 		 */
+		
+		g.setColor(Color.WHITE); 
+		String p1ScorStr = "Player 1: " + p1Score;
+		String p2ScorStr = "Player 2: " + p2Score;
+
+		g.drawString(p1ScorStr, (getWidth() / 2) - p1ScorStr.length()*2, 25);
+		g.drawString(p2ScorStr, (getWidth() / 2) - p2ScorStr.length()*2, 40);
+
 		player.render(g);
 		ai.render(g);
+		ball.render(g);
 
 		g.dispose();
 		bs.show();
