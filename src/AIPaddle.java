@@ -3,11 +3,14 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class AIPaddle {
+
 	int x;
 	int y;
 	int width = 15;
 	int height = 60;
-	int speed = 1;
+	int speed = 2;
+
+	boolean isTwoPlayer = false;
 
 	Rectangle boundingBox;
 
@@ -23,16 +26,25 @@ public class AIPaddle {
 	}
 
 	public void tick(Game game) {
-		
+
 		boundingBox.setBounds(x, y, width, height);
 
-		if (game.ball.y - height/2 < y && y >= 0) {
-			y-= speed;
+		if (!isTwoPlayer) {
+			if (game.ball.y - height / 2 < y && y >= 0) {
+				y -= speed;
+			}
+
+			if (game.ball.y > y + height / 2 && y + height <= game.getHeight()) {
+				y += speed;
+			}
+		} else {
+			if (goingUp) {
+				y -= speed;
+			} else if (goingDown) {
+				y += speed;
+			}
 		}
-		
-		if (game.ball.y > y + height/2 && y + height <= game.getHeight()) {
-			y+= speed;
-		}
+
 	}
 
 	public void render(Graphics g) {

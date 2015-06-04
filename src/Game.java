@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 			BufferedImage.TYPE_INT_RGB);
 
 	static boolean gameRunning = false;
-	
+
 	int p1Score, p2Score;
 
 	@Override
@@ -105,16 +105,15 @@ public class Game extends Canvas implements Runnable {
 																	// background
 
 		/*
-		 * g.setColor(Color.RED); 
-		 * g.fillRect(0, 0, getWidth(), getHeight());
+		 * g.setColor(Color.RED); g.fillRect(0, 0, getWidth(), getHeight());
 		 */
-		
-		g.setColor(Color.WHITE); 
+
+		g.setColor(Color.WHITE);
 		String p1ScorStr = "Player 1: " + p1Score;
 		String p2ScorStr = "Player 2: " + p2Score;
 
-		g.drawString(p1ScorStr, (getWidth() / 2) - p1ScorStr.length()*2, 25);
-		g.drawString(p2ScorStr, (getWidth() / 2) - p2ScorStr.length()*2, 40);
+		g.drawString(p1ScorStr, (getWidth() / 2) - p1ScorStr.length() * 2, 25);
+		g.drawString(p2ScorStr, (getWidth() / 2) - p2ScorStr.length() * 2, 40);
 
 		player.render(g);
 		ai.render(g);
@@ -123,10 +122,4 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
-
-	public static void main(String[] args) {
-		Game game = new Game();
-		game.start();
-	}
-
 }
